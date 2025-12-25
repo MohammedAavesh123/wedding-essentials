@@ -1,0 +1,13 @@
+/node_modules
+/tests
+/storage
+/database
+/.git
+/.env
+/README.md
+/phpunit.xml
+/deploy.sh
+/auth.json
+/package-lock.json
+/backup.sql
+/public/storage
