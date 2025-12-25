@@ -43,6 +43,31 @@ Route::get('/debug-env', function () {
     ];
 });
 
+Route::get('/seed-admin', function () {
+    try {
+        // Create Role if not exists
+        \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Super Admin', 'guard_name' => 'web']); // Guard might be web for admin model? Admin model usually uses 'admin' guard. Checked file: yes, admin model.
+        $role = \Spatie\Permission\Models\Role::where('name', 'Super Admin')->first();
+        
+        // Create Admin User
+        $admin = \App\Models\Admin::firstOrCreate(
+            ['email' => 'admin@dahejsaman.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => bcrypt('password123'),
+                // 'is_super_admin' => true, // Check if this column exists, usually permission handles it. Safe to omit if using roles.
+            ]
+        );
+        
+        // Assign Role
+        $admin->assignRole($role);
+        
+        return "Admin user created successfully! <br>Email: admin@dahejsaman.com <br>Password: password123";
+    } catch (\Exception $e) {
+        return "Seeding Failed: " . $e->getMessage();
+    }
+});
+
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 Route::get('/packages', [App\Http\Controllers\Frontend\PackageController::class, 'index'])->name('frontend.packages.index');
 Route::get('/packages/{slug}', [App\Http\Controllers\Frontend\PackageController::class, 'show'])->name('frontend.packages.show');
