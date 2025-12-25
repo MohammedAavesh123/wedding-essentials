@@ -77,6 +77,13 @@
                                 <a href="{{ route('register') }}" class="fw-bold">Register Now</a>
                             </p>
                         </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="text-center small text-muted">
+                            <strong>Test Credentials:</strong><br>
+                            <span class="badge bg-primary">Customer</span> customer@test.com / password
+                        </div>
                     </form>
                 </div>
             </div>

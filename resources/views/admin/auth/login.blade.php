@@ -34,8 +34,15 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-footer text-center py-3">
-                    <div class="small"><a href="{{ route('home') }}" class="text-decoration-none text-dark">Back to Home</a></div>
+                <div class="card-footer py-3">
+                    <div class="text-center mb-2">
+                        <a href="{{ route('home') }}" class="text-decoration-none text-dark">Back to Home</a>
+                    </div>
+                    <hr>
+                    <div class="small text-muted">
+                        <strong>Test Credentials:</strong><br>
+                        <span class="badge bg-dark">Admin</span> admin@dahejsaman.com / password123
+                    </div>
                 </div>
             </div>
         </div>
