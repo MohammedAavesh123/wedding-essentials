@@ -32,7 +32,7 @@ Route::get('/migrate-db', function () {
             'model_has_permissions', 'model_has_roles', 'role_has_permissions',
             'permissions', 'roles', 'users', 'admins', 
             'products', 'packages', 'categories', 'payments', 
-            'inquiries', 'popup_notifications', 'settings',
+            'inquiries', 'popup_notifications', 'settings', 'site_settings',
             'personal_access_tokens', 'password_reset_tokens', 'failed_jobs', 'migrations'
         ];
 
