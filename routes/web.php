@@ -17,8 +17,21 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/migrate-db', function () {
-    Artisan::call('migrate:fresh --seed --force');
-    return "Database migrated and seeded successfully!";
+    try {
+        Artisan::call('migrate:fresh --force');
+        $output = "Database migrated successfully!<br>";
+        
+        try {
+            Artisan::call('db:seed --force');
+            $output .= "Seeders completed successfully! ✅";
+        } catch (\Exception $e) {
+            $output .= "Migration Done, but Seeding failed: " . $e->getMessage();
+        }
+        
+        return $output;
+    } catch (\Exception $e) {
+        return "Migration Failed: " . $e->getMessage();
+    }
 });
 
 Route::get('/debug-env', function () {
