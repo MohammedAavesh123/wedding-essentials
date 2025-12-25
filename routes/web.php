@@ -173,6 +173,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'updateGeneral'])
             ->name('settings.general.update')
             ->middleware('permission:manage settings');
+        
+        Route::get('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'theme'])
+            ->name('settings.theme')
+            ->middleware('permission:manage settings');
+        Route::put('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'updateTheme'])
+            ->name('settings.theme.update')
+            ->middleware('permission:manage settings');
             
         Route::get('settings/combo', [App\Http\Controllers\Admin\SettingsController::class, 'combo'])
             ->name('settings.combo')

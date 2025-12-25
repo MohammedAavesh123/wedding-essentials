@@ -46,4 +46,30 @@ class SettingsController extends Controller
         return redirect()->route('admin.settings.general')
             ->with('success', 'Settings updated successfully!');
     }
+
+    public function theme()
+    {
+        $settings = SiteSetting::firstOrCreate([]);
+        return view('admin.settings.theme', compact('settings'));
+    }
+
+    public function updateTheme(Request $request)
+    {
+        $validated = $request->validate([
+            'primary_color' => 'required|regex:/^#[0-9A-F]{6}$/i',
+            'secondary_color' => 'required|regex:/^#[0-9A-F]{6}$/i',
+            'accent_color' => 'required|regex:/^#[0-9A-F]{6}$/i',
+            'text_color' => 'required|regex:/^#[0-9A-F]{6}$/i',
+            'background_color' => 'required|regex:/^#[0-9A-F]{6}$/i',
+        ]);
+
+        $settings = SiteSetting::firstOrCreate([]);
+        $settings->update($validated);
+
+        // Clear cache if exists
+        \Artisan::call('cache:clear');
+
+        return redirect()->route('admin.settings.theme')
+            ->with('success', 'Theme updated successfully!');
+    }
 }

@@ -381,6 +381,14 @@ return [
             'can'  => 'manage settings',
         ],
         
+        // Theme Settings
+        [
+            'text' => 'Theme Settings',
+            'url'  => 'admin/settings/theme',
+            'icon' => 'fas fa-fw fa-palette',
+            'can'  => 'manage settings',
+        ],
+        
         // Combo Settings
         [
             'text' => 'Combo Settings',
