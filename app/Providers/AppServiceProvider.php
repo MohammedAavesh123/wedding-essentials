@@ -22,3 +22,8 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 }
+// Add this in the boot() method
+public function boot(): void
+{
+    $this->loadViewsFrom(resource_path('views/vendor/adminlte'), 'adminlte');
+}
