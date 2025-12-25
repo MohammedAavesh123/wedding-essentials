@@ -19,7 +19,7 @@ class SettingsController extends Controller
     {
         $validated = $request->validate([
             'site_name' => 'required|string|max:255',
-            'site_logo' => 'nullable|image|max:2048',
+            'site_logo' => 'nullable|url|max:500',
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',
@@ -29,18 +29,6 @@ class SettingsController extends Controller
         ]);
 
         $settings = SiteSetting::firstOrCreate([]);
-
-        // Handle logo upload
-        if ($request->hasFile('site_logo')) {
-            // Delete old logo
-            if ($settings->site_logo) {
-                Storage::disk('public')->delete($settings->site_logo);
-            }
-            
-            $path = $request->file('site_logo')->store('logos', 'public');
-            $validated['site_logo'] = $path;
-        }
-
         $settings->update($validated);
 
         return redirect()->route('admin.settings.general')

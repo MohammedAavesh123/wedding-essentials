@@ -58,14 +58,12 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="site_logo">Site Logo</label>
-                            <div class="custom-file">
-                                <input type="file" name="site_logo" id="site_logo" class="custom-file-input @error('site_logo') is-invalid @enderror" accept="image/*">
-                                <label class="custom-file-label" for="site_logo">Choose file</label>
-                            </div>
+                            <label for="site_logo">Site Logo URL</label>
+                            <input type="url" name="site_logo" id="site_logo" class="form-control @error('site_logo') is-invalid @enderror" value="{{ old('site_logo', $settings->site_logo) }}" placeholder="https://example.com/logo.png">
+                            <small class="text-muted">Enter the full URL of your logo image</small>
                             @if($settings->site_logo)
                                 <div class="mt-2">
-                                    <img src="{{ asset('storage/' . $settings->site_logo) }}" alt="Logo" style="max-height: 100px;">
+                                    <img src="{{ $settings->site_logo }}" alt="Logo" style="max-height: 100px;">
                                 </div>
                             @endif
                             @error('site_logo')
