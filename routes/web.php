@@ -23,12 +23,19 @@ Route::get('/migrate-db', function () {
         
         $output = "<strong>Starting Manual Wipe...</strong><br>";
 
-        // Manual Drop Tables (Raw Postgres)
-        $tables = DB::select("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public'");
-        foreach ($tables as $table) {
-            $tableName = $table->tablename;
-            DB::statement("DROP TABLE IF EXISTS \"$tableName\" CASCADE");
-            $output .= "Dropped $tableName... ";
+        // Manual Hardcoded Drop (To ensure 100% deletion)
+        $tablesToDelete = [
+            'booking_items', 'bookings', 'package_items', 'product_images', 
+            'model_has_permissions', 'model_has_roles', 'role_has_permissions',
+            'permissions', 'roles', 'users', 'admins', 
+            'products', 'packages', 'categories', 'payments', 
+            'inquiries', 'popup_notifications', 'settings',
+            'personal_access_tokens', 'password_reset_tokens', 'failed_jobs', 'migrations'
+        ];
+
+        foreach ($tablesToDelete as $t) {
+            DB::statement("DROP TABLE IF EXISTS \"$t\" CASCADE");
+            $output .= "Dropped $t... ";
         }
         $output .= "<br>Manual Wipe Complete. ✅<br>";
 
