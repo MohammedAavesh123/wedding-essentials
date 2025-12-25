@@ -66,7 +66,7 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('POSTGRES_HOST') ?: env('DB_HOST', '127.0.0.1'),
+            'host' => env('DATABASE_URL') ? parse_url(env('DATABASE_URL'))['host'] : (env('POSTGRES_HOST') ?: env('DB_HOST', '127.0.0.1')),
             'port' => env('POSTGRES_PORT') ?: env('DB_PORT', '5432'),
             'database' => env('POSTGRES_DATABASE') ?: env('DB_DATABASE', 'forge'),
             'username' => env('POSTGRES_USER') ?: env('DB_USERNAME', 'forge'),
