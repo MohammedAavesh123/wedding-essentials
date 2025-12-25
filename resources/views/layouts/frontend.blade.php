@@ -39,6 +39,10 @@
             padding: 40px 0;
         }
     </style>
+    
+    {{-- Dynamic Theme CSS --}}
+    <link rel="stylesheet" href="{{ route('theme.css') }}">
+    
     @yield('css')
 </head>
 <body>

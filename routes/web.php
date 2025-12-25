@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
+// Dynamic Theme CSS
+Route::get('/css/theme.css', [App\Http\Controllers\ThemeController::class, 'generateCSS'])->name('theme.css');
+
 Route::get('/migrate-db', function () {
     try {
         DB::purge(env('DB_CONNECTION'));
