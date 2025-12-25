@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => function_exists('app') && app()->bound('db') ? \App\Models\Setting::get('site_name', 'Wedding Essentials') : 'Wedding Essentials',
+    'title' => function_exists('app') && app()->bound('db') ? \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') : 'Wedding Essentials',
     'title_prefix' => '',
     'title_postfix' => ' - Admin',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>' . (function_exists('app') && app()->bound('db') ? \App\Models\Setting::get('site_name', 'Wedding') : 'Wedding') . '</b> Essentials',
+    'logo' => '<b>' . (function_exists('app') && app()->bound('db') ? \App\Models\SiteSetting::get('site_name', 'Wedding') : 'Wedding') . '</b> Essentials',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

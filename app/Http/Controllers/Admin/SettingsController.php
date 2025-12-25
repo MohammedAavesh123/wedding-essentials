@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,7 +11,7 @@ class SettingsController extends Controller
 {
     public function general()
     {
-        $settings = Setting::firstOrCreate([]);
+        $settings = SiteSetting::firstOrCreate([]);
         return view('admin.settings.general', compact('settings'));
     }
 
@@ -28,7 +28,7 @@ class SettingsController extends Controller
             'twitter_url' => 'nullable|url|max:255',
         ]);
 
-        $settings = Setting::firstOrCreate([]);
+        $settings = SiteSetting::firstOrCreate([]);
 
         // Handle logo upload
         if ($request->hasFile('site_logo')) {
