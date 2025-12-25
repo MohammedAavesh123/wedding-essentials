@@ -3,7 +3,7 @@
 @section('content')
         <div class="hero-section">
         <div class="container">
-            <h1 class="display-4 fw-bold mb-4">Complete Marriage Furniture Packages</h1>
+            <h1 class="display-4 fw-bold mb-4">Wedding Essentials Collection</h1>
             <p class="lead mb-5">Everything you need for a new beginning. Customizable packages starting from ₹50,000.</p>
             <a href="{{ route('frontend.packages.index') }}" class="btn btn-primary btn-lg px-5 rounded-pill">View Packages</a>
         </div>
@@ -26,7 +26,7 @@
                     <div class="container">
                         <div class="row align-items-center" style="min-height: 600px;">
                             <div class="col-lg-7 text-white">
-                                <h1 class="display-2 fw-bold mb-4 animate__animated animate__fadeInUp">Complete Marriage Furniture Packages</h1>
+                                <h1 class="display-2 fw-bold mb-4 animate__animated animate__fadeInUp">Wedding Essentials Collection</h1>
                                 <p class="lead mb-4 fs-4 animate__animated animate__fadeInUp animate__delay-1s">Everything you need for your new beginning. Premium quality furniture at unbeatable prices.</p>
                                 <div class="animate__animated animate__fadeInUp animate__delay-2s">
                                     <a href="{{ route('frontend.packages.index') }}" class="btn btn-warning btn-lg px-5 py-3 me-3 shadow-lg">
@@ -84,7 +84,7 @@
     <section class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold">Marriage Furniture Packages</h2>
+                <h2 class="display-5 fw-bold">Curated Wedding Packages</h2>
                 <p class="text-muted">Choose from our curated packages or customize your own</p>
             </div>
             <div class="row g-4">
