@@ -19,24 +19,37 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/migrate-db', function () {
     try {
-        // Force Wipe Database (Postgres specific)
-        DB::statement('DROP SCHEMA public CASCADE');
-        DB::statement('CREATE SCHEMA public');
+        // Clear cache/connection first
+        DB::purge(env('DB_CONNECTION'));
         
-        Artisan::call('migrate:fresh --force');
-        $output = "Database Wiped & Migrated Successfully!<br>";
+        $output = "<strong>Starting Database Wiping...</strong><br>";
+        
+        // 1. Wipe
+        try {
+            Artisan::call('db:wipe --force');
+            $output .= "Database Wiped Successfully! ✅<br>";
+        } catch (\Exception $e) {
+            $output .= "Wipe Failed (Proceeding anyway): " . $e->getMessage() . "<br>";
+        }
+
+        // 2. Migrate
+        $output .= "<strong>Starting Migration...</strong><br>";
+        Artisan::call('migrate --force');
+        $output .= "Tables Created Successfully! ✅<br>";
         $output .= nl2br(Artisan::output());
         
+        // 3. Seed
         try {
             Artisan::call('db:seed --force');
-            $output .= "<br>Seeders Output:<br>" . nl2br(Artisan::output());
+            $output .= "<br>Seeders completed successfully! ✅";
+            $output .= nl2br(Artisan::output());
         } catch (\Exception $e) {
             $output .= "<br><strong>Seeding Failed:</strong> " . $e->getMessage();
         }
         
         return $output;
     } catch (\Exception $e) {
-        return "Migration Failed: " . $e->getMessage();
+        return "Critical Failure: " . $e->getMessage() . "<br>Trace: " . $e->getTraceAsString();
     }
 });
 
