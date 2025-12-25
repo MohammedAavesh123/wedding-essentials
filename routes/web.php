@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/migrate-db', function () {
+    Artisan::call('migrate:fresh --seed --force');
+    return "Database migrated and seeded successfully!";
+});
+
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 Route::get('/packages', [App\Http\Controllers\Frontend\PackageController::class, 'index'])->name('frontend.packages.index');
 Route::get('/packages/{slug}', [App\Http\Controllers\Frontend\PackageController::class, 'show'])->name('frontend.packages.show');
