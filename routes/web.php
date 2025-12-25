@@ -23,11 +23,12 @@ Route::get('/migrate-db', function () {
         
         $output = "<strong>Starting Manual Wipe...</strong><br>";
 
-        // Manual Drop Tables to avoid Transaction locks
-        $tables = DB::connection()->getDoctrineSchemaManager()->listTableNames();
+        // Manual Drop Tables (Raw Postgres)
+        $tables = DB::select("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public'");
         foreach ($tables as $table) {
-            Schema::dropIfExists($table);
-            $output .= "Dropped $table... ";
+            $tableName = $table->tablename;
+            DB::statement("DROP TABLE IF EXISTS \"$tableName\" CASCADE");
+            $output .= "Dropped $tableName... ";
         }
         $output .= "<br>Manual Wipe Complete. ✅<br>";
 
