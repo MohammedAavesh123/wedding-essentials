@@ -16,3 +16,8 @@
 /package-lock.json
 /backup.sql
 /public/storage
+# AdminLTE heavy folders
+vendor/almasaeed2010/adminlte/plugins
+vendor/almasaeed2010/adminlte/docs
+vendor/almasaeed2010/adminlte/pages
+vendor/almasaeed2010/adminlte/build
