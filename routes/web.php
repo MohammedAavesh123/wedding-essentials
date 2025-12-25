@@ -19,26 +19,25 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/migrate-db', function () {
     try {
-        // Clear cache/connection first
         DB::purge(env('DB_CONNECTION'));
         
-        $output = "<strong>Starting Database Wiping...</strong><br>";
-        
-        // 1. Wipe
-        try {
-            Artisan::call('db:wipe --force');
-            $output .= "Database Wiped Successfully! ✅<br>";
-        } catch (\Exception $e) {
-            $output .= "Wipe Failed (Proceeding anyway): " . $e->getMessage() . "<br>";
-        }
+        $output = "<strong>Starting Manual Wipe...</strong><br>";
 
-        // 2. Migrate
+        // Manual Drop Tables to avoid Transaction locks
+        $tables = DB::connection()->getDoctrineSchemaManager()->listTableNames();
+        foreach ($tables as $table) {
+            Schema::dropIfExists($table);
+            $output .= "Dropped $table... ";
+        }
+        $output .= "<br>Manual Wipe Complete. ✅<br>";
+
+        // Migrate
         $output .= "<strong>Starting Migration...</strong><br>";
         Artisan::call('migrate --force');
         $output .= "Tables Created Successfully! ✅<br>";
         $output .= nl2br(Artisan::output());
         
-        // 3. Seed
+        // Seed
         try {
             Artisan::call('db:seed --force');
             $output .= "<br>Seeders completed successfully! ✅";
