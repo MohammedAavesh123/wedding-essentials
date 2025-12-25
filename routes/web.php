@@ -21,6 +21,15 @@ Route::get('/migrate-db', function () {
     return "Database migrated and seeded successfully!";
 });
 
+Route::get('/debug-env', function () {
+    return [
+        'DB_CONNECTION' => env('DB_CONNECTION'),
+        'POSTGRES_HOST' => env('POSTGRES_HOST') ? 'SET (Value Hidden)' : 'MISSING',
+        'POSTGRES_USER' => env('POSTGRES_USER') ? 'SET' : 'MISSING',
+        'DB_HOST' => env('DB_HOST'),
+    ];
+});
+
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 Route::get('/packages', [App\Http\Controllers\Frontend\PackageController::class, 'index'])->name('frontend.packages.index');
 Route::get('/packages/{slug}', [App\Http\Controllers\Frontend\PackageController::class, 'show'])->name('frontend.packages.show');
