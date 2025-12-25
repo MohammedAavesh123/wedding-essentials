@@ -40,8 +40,91 @@
         }
     </style>
     
-    {{-- Dynamic Theme CSS --}}
-    <link rel="stylesheet" href="{{ route('theme.css') }}">
+    {{-- Dynamic Theme CSS - Inline for Vercel --}}
+    @php
+        $themeColors = \App\Models\SiteSetting::getThemeColors();
+    @endphp
+    <style>
+        :root {
+            --primary-color: {{ $themeColors['primary'] }};
+            --secondary-color: {{ $themeColors['secondary'] }};
+            --accent-color: {{ $themeColors['accent'] }};
+        }
+        
+        /* Modern Hero with Gradient */
+        .hero-section {
+            background: linear-gradient(135deg, {{ $themeColors['primary'] }} 0%, {{ $themeColors['secondary'] }} 100%) !important;
+            padding: 120px 0 !important;
+        }
+        
+        .hero-section h1 {
+            font-size: 3.5rem !important;
+            font-weight: 700 !important;
+        }
+        
+        /* Primary Buttons */
+        .btn-primary {
+            background-color: {{ $themeColors['primary'] }} !important;
+            border-color: {{ $themeColors['primary'] }} !important;
+            padding: 12px 32px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: {{ $themeColors['secondary'] }} !important;
+            border-color: {{ $themeColors['secondary'] }} !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2) !important;
+        }
+        
+        /* Modern Package Cards */
+        .package-card {
+            border: none !important;
+            border-radius: 16px !important;
+            transition: all 0.4s ease !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+            border-top: 4px solid {{ $themeColors['primary'] }} !important;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-12px) !important;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important;
+        }
+        
+        .package-card .package-price {
+            color: {{ $themeColors['accent'] }} !important;
+            font-size: 2.5rem !important;
+            font-weight: 800 !important;
+        }
+        
+        /* Modern Product Cards */
+        .product-card {
+            border-radius: 12px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+        }
+        
+        .product-card .price {
+            color: {{ $themeColors['accent'] }} !important;
+            font-weight: 700 !important;
+        }
+        
+        /* Navigation */
+        .navbar-brand {
+            color: {{ $themeColors['primary'] }} !important;
+            font-weight: 700 !important;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: {{ $themeColors['primary'] }} !important;
+        }
+    </style>
     
     @yield('css')
 </head>
