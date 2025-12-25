@@ -3,9 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dahej Ka Saman - Marriage Furniture Packages</title>
+    <title>{{ \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') }} - Marriage Furniture Packages</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #1F2937;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-size: 1.75rem !important;
+            font-weight: 800 !important;
+        }
+        
+        .hero-section {
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+            opacity: 0.3;
+        }
+        
+        .section-heading {
+            font-size: 2.75rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 1rem !important;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-subheading {
+            font-size: 1.25rem;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .package-card {
+            background: white;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .package-card .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .package-card .card-body {
+            padding: 2rem;
+        }
+        
+        .package-card .card-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .package-card .package-price {
+            display: block;
+            margin: 1.5rem 0;
+        }
+        
+        .package-card .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        
+        .package-card .features-list li {
+            padding: 0.5rem 0;
+            color: #6B7280;
+            font-size: 0.95rem;
+        }
+        
+        .package-card .features-list li i {
+            margin-right: 0.5rem;
+            color: #10B981;
+        }
+        
+        .why-choose-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .why-choose-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        
+        .why-choose-card .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .why-choose-card h5 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .why-choose-card p {
+            color: #6B7280;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer h5 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: white;
+        }
+    </style>
     <style>
         :root {
             --primary-color: #0d6efd;
@@ -133,7 +308,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold text-primary" href="{{ url('/') }}">
-                <i class="fas fa-couch me-2"></i>Dahej Ka Saman
+                <i class="fas fa-couch me-2"></i>{{ \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') }}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -173,7 +348,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5>Dahej Ka Saman</h5>
+                    <h5>{{ \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') }}</h5>
                     <p>Complete marriage furniture packages at best prices.</p>
                 </div>
                 <div class="col-md-4">
@@ -192,7 +367,7 @@
             </div>
             <hr>
             <div class="text-center">
-                <p>&copy; {{ date('Y') }} Dahej Ka Saman. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} {{ \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') }}. All rights reserved.</p>
             </div>
         </div>
     </footer>
