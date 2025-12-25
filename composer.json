@@ -49,7 +49,8 @@
         ],
         "post-install-cmd": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "rm -rf vendor/almasaeed2010/adminlte/plugins vendor/almasaeed2010/adminlte/docs vendor/almasaeed2010/adminlte/pages"
+            "rm -rf vendor/almasaeed2010/adminlte/plugins vendor/almasaeed2010/adminlte/docs vendor/almasaeed2010/adminlte/pages",
+            "rm -rf vendor/almasaeed2010/adminlte/plugins vendor/almasaeed2010/adminlte/docs vendor/almasaeed2010/adminlte/pages vendor/almasaeed2010/adminlte/build"
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
