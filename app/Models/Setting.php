@@ -2,26 +2,38 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'site_name',
+        'site_logo',
+        'contact_email',
+        'contact_phone',
+        'address',
+        'facebook_url',
+        'instagram_url',
+        'twitter_url',
+    ];
 
-    protected $fillable = ['key', 'value', 'type', 'group'];
-
+    /**
+     * Get a setting value by key
+     */
     public static function get($key, $default = null)
     {
-        $setting = self::where('key', $key)->first();
-        return $setting ? $setting->value : $default;
+        $setting = static::first();
+        return $setting ? ($setting->$key ?? $default) : $default;
     }
 
-    public static function set($key, $value, $type = 'text', $group = 'general')
+    /**
+     * Set a setting value
+     */
+    public static function set($key, $value)
     {
-        return self::updateOrCreate(
-            ['key' => $key],
-            ['value' => $value, 'type' => $type, 'group' => $group]
-        );
+        $setting = static::firstOrCreate([]);
+        $setting->$key = $value;
+        $setting->save();
+        return $setting;
     }
 }

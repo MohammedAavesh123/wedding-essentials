@@ -167,6 +167,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->middleware('permission:view customers');
 
         // Settings (Super Admin - manage settings permission)
+        Route::get('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'general'])
+            ->name('settings.general')
+            ->middleware('permission:manage settings');
+        Route::put('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'updateGeneral'])
+            ->name('settings.general.update')
+            ->middleware('permission:manage settings');
+            
         Route::get('settings/combo', [App\Http\Controllers\Admin\SettingsController::class, 'combo'])
             ->name('settings.combo')
             ->middleware('permission:manage settings');

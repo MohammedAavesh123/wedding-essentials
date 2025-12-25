@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Dahej Ka Saman',
+    'title' => \App\Models\Setting::get('site_name', 'Wedding Essentials'),
     'title_prefix' => '',
     'title_postfix' => ' - Admin',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Dahej</b> Ka Saman',
+    'logo' => '<b>' . \App\Models\Setting::get('site_name', 'Wedding') . '</b> Essentials',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -372,6 +372,14 @@ return [
         ],
         
         ['header' => 'SETTINGS', 'can' => 'manage settings'],
+        
+        // General Settings
+        [
+            'text' => 'General Settings',
+            'url'  => 'admin/settings/general',
+            'icon' => 'fas fa-fw fa-cog',
+            'can'  => 'manage settings',
+        ],
         
         // Combo Settings
         [
