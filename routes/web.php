@@ -15,11 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/migrate-db', function () {
     try {
+        // Force Wipe Database (Postgres specific)
+        DB::statement('DROP SCHEMA public CASCADE');
+        DB::statement('CREATE SCHEMA public');
+        
         Artisan::call('migrate:fresh --force');
-        $output = "Attempted Migration. Output:<br>";
+        $output = "Database Wiped & Migrated Successfully!<br>";
         $output .= nl2br(Artisan::output());
         
         try {
