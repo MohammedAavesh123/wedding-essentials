@@ -17,7 +17,8 @@
         "spatie/laravel-permission": "^6.24"
     },
     "replace": {
-        "jeroennoten/laravel-adminlte": "*"
+        "jeroennoten/laravel-adminlte": "*",
+        "almasaeed2010/adminlte": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
