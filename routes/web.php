@@ -19,13 +19,14 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/migrate-db', function () {
     try {
         Artisan::call('migrate:fresh --force');
-        $output = "Database migrated successfully!<br>";
+        $output = "Attempted Migration. Output:<br>";
+        $output .= nl2br(Artisan::output());
         
         try {
             Artisan::call('db:seed --force');
-            $output .= "Seeders completed successfully! ✅";
+            $output .= "<br>Seeders Output:<br>" . nl2br(Artisan::output());
         } catch (\Exception $e) {
-            $output .= "Migration Done, but Seeding failed: " . $e->getMessage();
+            $output .= "<br><strong>Seeding Failed:</strong> " . $e->getMessage();
         }
         
         return $output;
