@@ -57,14 +57,14 @@ class BookingSeeder extends Seeder
                 'created_at' => Carbon::now()->subDays(rand(1, 30)),
             ]);
 
-            // Add booking items from package
+            // Add booking items from package (correct schema: item_name, item_type, price)
             foreach ($package->items as $packageItem) {
                 BookingItem::create([
                     'booking_id' => $booking->id,
                     'product_id' => $packageItem->product_id,
-                    'quantity' => $packageItem->quantity,
+                    'item_name' => $packageItem->product->name,
+                    'item_type' => $packageItem->type,
                     'price' => $packageItem->product->price,
-                    'subtotal' => $packageItem->product->price * $packageItem->quantity,
                 ]);
             }
 
