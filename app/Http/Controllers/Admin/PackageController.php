@@ -79,10 +79,10 @@ class PackageController extends Controller
             'name' => 'required|string|max:255',
             'base_price' => 'required|numeric|min:0',
             'items' => 'nullable|array',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        DB::transaction(function () use ($request, $package) {
+        try {
+            // Update package details
             $package->name = $request->name;
             $package->slug = Str::slug($request->name);
             $package->description = $request->description;
@@ -98,22 +98,32 @@ class PackageController extends Controller
             
             $package->save();
 
-            // Sync items: Delete all and recreate
-            $package->items()->delete();
-
-            if ($request->has('items')) {
+            // Sync items: Use detach/attach instead of delete/create
+            if ($request->has('items') && is_array($request->items)) {
+                // Remove all existing items
+                $package->items()->delete(); // Changed from detach() to delete() as PackageItem is a model, not a pivot table
+                
+                // Add new items
                 foreach ($request->items as $item) {
-                    PackageItem::create([
-                        'package_id' => $package->id,
-                        'product_id' => $item['product_id'],
-                        'quantity' => $item['quantity'],
-                        'type' => $item['type'],
-                    ]);
+                    if (isset($item['product_id']) && isset($item['quantity']) && isset($item['type'])) {
+                        PackageItem::create([
+                            'package_id' => $package->id,
+                            'product_id' => $item['product_id'],
+                            'quantity' => $item['quantity'],
+                            'type' => $item['type'],
+                        ]);
+                    }
                 }
+            } else {
+                // If no items are provided, delete all existing items
+                $package->items()->delete();
             }
-        });
 
-        return redirect()->route('admin.packages.index')->with('success', 'Package updated successfully.');
+            return redirect()->route('admin.packages.index')->with('success', 'Package updated successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Package update error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to update package: ' . $e->getMessage())->withInput();
+        }
     }
 
     public function destroy(Package $package)
