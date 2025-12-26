@@ -29,13 +29,12 @@ class BookingSeeder extends Seeder
             $status = $statuses[array_rand($statuses)];
             $paymentStatus = $paymentStatuses[array_rand($paymentStatuses)];
             
-            // Create booking
+            // Create booking (removed paid_amount field)
             $booking = Booking::create([
                 'user_id' => $user->id,
                 'package_id' => $package->id,
                 'booking_number' => 'BK' . date('Ymd') . str_pad($index + 1, 4, '0', STR_PAD_LEFT),
                 'total_amount' => $package->base_price,
-                'paid_amount' => $paymentStatus === 'paid' ? $package->base_price : ($paymentStatus === 'partial' ? $package->base_price * 0.5 : 0),
                 'status' => $status,
                 'payment_status' => $paymentStatus,
                 'delivery_address' => $user->address,
