@@ -106,6 +106,11 @@ class PackageController extends Controller
                 $image->move(public_path('storage/packages'), $filename);
                 $package->image = asset('storage/packages/' . $filename);
             }
+        
+            // Handle image URL (Vercel doesn't support file uploads)
+            if ($request->filled('image_url')) { // Changed 'image' to 'image_url' to avoid conflict with file upload validation
+                $package->image = $request->image_url;
+            }
             
             $package->save();
 
