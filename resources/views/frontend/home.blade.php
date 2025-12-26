@@ -244,6 +244,137 @@
         color: #6B7280;
         line-height: 1.6;
     }
+    
+    /* Modern Category Tabs */
+    #categoryTabs .nav-link {
+        background: white;
+        color: #6B7280;
+        border: 2px solid #E5E7EB;
+        transition: all 0.3s ease;
+    }
+    
+    #categoryTabs .nav-link:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        transform: translateY(-2px);
+    }
+    
+    #categoryTabs .nav-link.active {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    /* Clickable Product Cards */
+    .product-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    
+    .product-card-wrapper {
+        position: relative;
+    }
+    
+    .product-card-wrapper:hover .product-image img {
+        transform: scale(1.1);
+    }
+    
+    .product-image {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .product-image img {
+        transition: transform 0.4s ease;
+    }
+    
+    /* Floating + Button */
+    .add-to-combo-btn {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+    
+    .add-to-combo-btn:hover {
+        transform: scale(1.15) rotate(90deg);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    
+    /* Product Info */
+    .product-info {
+        padding: 1.25rem;
+    }
+    
+    .product-name {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 0.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .product-description {
+        font-size: 0.8125rem;
+        color: #6B7280;
+        margin-bottom: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .product-price-wrapper {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .product-price {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--accent-color);
+    }
+    
+    .product-original-price {
+        font-size: 1rem;
+        color: #9CA3AF;
+        text-decoration: line-through;
+    }
+    
+    .product-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .product-tag {
+        background: #F3F4F6;
+        color: #374151;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
 </style>
 @endsection
 
@@ -446,31 +577,37 @@
                     <div class="row g-4">
                         @foreach($category->products()->take(4)->get() as $product)
                         <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="modern-package-card">
-                                <div class="package-image-wrapper" style="height: 200px;">
-                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80' }}" 
-                                         alt="{{ $product->name }}">
-                                </div>
-                                <div class="package-content">
-                                    <h5 class="package-name" style="font-size: 1.125rem;">{{ $product->name }}</h5>
-                                    <p class="package-description" style="font-size: 0.8125rem;">{{ Str::limit($product->description, 60) }}</p>
-                                    <div class="package-price-section">
-                                        <span class="package-price" style="font-size: 1.5rem;">₹{{ number_format($product->price) }}</span>
+                            <div class="modern-package-card product-card-wrapper">
+                                <a href="{{ route('frontend.products.show', $product->slug) }}" class="product-card-link">
+                                    <div class="package-image-wrapper product-image" style="height: 200px;">
+                                        <img src="{{ $product->image ?: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80' }}" 
+                                             alt="{{ $product->name }}">
                                     </div>
-                                    <div class="package-features mb-3">
-                                        <span class="feature-tag"><i class="fas fa-box me-1"></i>In Stock</span>
-                                        @if($product->package_price)
-                                        <span class="feature-tag"><i class="fas fa-tag me-1"></i>Package Deal</span>
-                                        @endif
+                                    <div class="package-content product-info">
+                                        <h5 class="product-name">{{ $product->name }}</h5>
+                                        <p class="product-description">{{ Str::limit($product->description, 60) }}</p>
+                                        <div class="product-price-wrapper">
+                                            <span class="product-price">₹{{ number_format($product->price) }}</span>
+                                            @if($product->package_price && $product->package_price < $product->price)
+                                            <span class="product-original-price">₹{{ number_format($product->package_price) }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="product-tags">
+                                            <span class="product-tag"><i class="fas fa-box me-1"></i>In Stock</span>
+                                            @if($product->package_price)
+                                            <span class="product-tag"><i class="fas fa-tag me-1"></i>Deal</span>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <button class="package-cta add-to-combo" 
-                                            data-product-id="{{ $product->id }}"
-                                            data-product-name="{{ $product->name }}"
-                                            data-price="{{ $product->price }}"
-                                            data-package-price="{{ $product->package_price ?? $product->price }}">
-                                        <i class="fas fa-plus me-2"></i>Add to Combo
-                                    </button>
-                                </div>
+                                </a>
+                                <button class="add-to-combo-btn add-to-combo" 
+                                        data-product-id="{{ $product->id }}"
+                                        data-product-name="{{ $product->name }}"
+                                        data-price="{{ $product->price }}"
+                                        data-package-price="{{ $product->package_price ?? $product->price }}"
+                                        title="Add to Custom Combo">
+                                    <i class="fas fa-plus"></i>
+                                </button>
                             </div>
                         </div>
                         @endforeach
