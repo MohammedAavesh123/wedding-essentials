@@ -21,9 +21,9 @@ class BookingSeeder extends Seeder
             return;
         }
 
-        // Use exact status values from database constraint
-        $statuses = ['pending', 'confirmed', 'delivered', 'cancelled'];
-        $paymentStatuses = ['pending', 'partial', 'paid'];
+        // Use safe default values to avoid constraint violations
+        $statuses = ['pending', 'confirmed'];
+        $paymentStatuses = ['pending', 'paid'];
 
         foreach ($users->take(10) as $index => $user) {
             $package = $packages->random();
@@ -32,10 +32,10 @@ class BookingSeeder extends Seeder
             
             // Calculate amounts
             $totalAmount = $package->base_price;
-            $advanceAmount = $paymentStatus === 'paid' ? $totalAmount : ($paymentStatus === 'partial' ? $totalAmount * 0.5 : 0);
+            $advanceAmount = $paymentStatus === 'paid' ? $totalAmount : 0;
             $pendingAmount = $totalAmount - $advanceAmount;
             
-            // Create booking with correct schema
+            // Create booking with correct schema and safe values
             $booking = Booking::create([
                 'user_id' => $user->id,
                 'package_id' => $package->id,
@@ -58,7 +58,7 @@ class BookingSeeder extends Seeder
                 'created_at' => Carbon::now()->subDays(rand(1, 30)),
             ]);
 
-            // Add booking items from package (correct schema: item_name, item_type, price)
+            // Add booking items from package
             foreach ($package->items as $packageItem) {
                 BookingItem::create([
                     'booking_id' => $booking->id,
