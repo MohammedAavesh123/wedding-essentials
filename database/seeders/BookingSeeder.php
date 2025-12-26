@@ -29,17 +29,31 @@ class BookingSeeder extends Seeder
             $status = $statuses[array_rand($statuses)];
             $paymentStatus = $paymentStatuses[array_rand($paymentStatuses)];
             
-            // Create booking (removed paid_amount field)
+            // Calculate amounts
+            $totalAmount = $package->base_price;
+            $advanceAmount = $paymentStatus === 'paid' ? $totalAmount : ($paymentStatus === 'partial' ? $totalAmount * 0.5 : 0);
+            $pendingAmount = $totalAmount - $advanceAmount;
+            
+            // Create booking with correct schema
             $booking = Booking::create([
                 'user_id' => $user->id,
                 'package_id' => $package->id,
                 'booking_number' => 'BK' . date('Ymd') . str_pad($index + 1, 4, '0', STR_PAD_LEFT),
-                'total_amount' => $package->base_price,
+                'customer_name' => $user->name,
+                'customer_email' => $user->email,
+                'customer_phone' => $user->phone,
+                'customer_address' => $user->address,
+                'city' => 'Mumbai',
+                'state' => 'Maharashtra',
+                'pincode' => '400001',
+                'total_amount' => $totalAmount,
+                'advance_amount' => $advanceAmount,
+                'pending_amount' => $pendingAmount,
+                'discount_amount' => 0,
+                'delivery_date' => Carbon::now()->addDays(rand(7, 30)),
+                'special_instructions' => 'Sample booking for testing purposes',
                 'status' => $status,
                 'payment_status' => $paymentStatus,
-                'delivery_address' => $user->address,
-                'delivery_date' => Carbon::now()->addDays(rand(7, 30)),
-                'notes' => 'Sample booking for testing purposes',
                 'created_at' => Carbon::now()->subDays(rand(1, 30)),
             ]);
 
