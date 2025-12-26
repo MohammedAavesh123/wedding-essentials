@@ -46,9 +46,12 @@ class PackageController extends Controller
             $package->auto_calculate_price = $request->has('auto_calculate_price');
             $package->is_featured = $request->has('is_featured');
             
-            // Handle image URL (Vercel doesn't support file uploads)
-            if ($request->filled('image_url')) {
-                $package->image = $request->image_url;
+            // Handle image upload - convert to base64
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageData = file_get_contents($image->getRealPath());
+                $base64 = 'data:' . $image->getMimeType() . ';base64,' . base64_encode($imageData);
+                $package->image = $base64;
             }
             
             $package->save();
@@ -91,9 +94,12 @@ class PackageController extends Controller
             $package->auto_calculate_price = $request->has('auto_calculate_price');
             $package->is_featured = $request->has('is_featured');
             
-            // Handle image URL (Vercel doesn't support file uploads)
-            if ($request->filled('image_url')) {
-                $package->image = $request->image_url;
+            // Handle image upload - convert to base64
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageData = file_get_contents($image->getRealPath());
+                $base64 = 'data:' . $image->getMimeType() . ';base64,' . base64_encode($imageData);
+                $package->image = $base64;
             }
             
             $package->save();

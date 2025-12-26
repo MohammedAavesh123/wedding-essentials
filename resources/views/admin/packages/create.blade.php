@@ -41,9 +41,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Package Image <span class="text-danger">(Image URL Only - No File Upload)</span></label>
-                    <input type="url" name="image_url" class="form-control" placeholder="https://images.unsplash.com/photo-xyz...">
-                    <small class="text-muted">Paste image URL from Unsplash, Imgur, or any direct image link. Vercel doesn't support file uploads.</small>
+                    <label>Package Image</label>
+                    <input type="file" name="image" id="package_image" class="form-control" accept="image/*">
+                    <small class="text-muted">Upload package image (JPG, PNG, WEBP). Image will be stored as base64.</small>
+                    <div id="image_preview" class="mt-2" style="display:none;">
+                        <img id="preview_img" src="" alt="Preview" style="max-width: 300px; height: auto;">
+                    </div>
                 </div>
 
                 <hr>
@@ -124,6 +127,28 @@
 
         $(document).on('click', '.remove-row', function() {
             $(this).closest('tr').remove();
+        });
+
+        // Image preview and base64 conversion
+        $('#package_image').on('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Image size should be less than 2MB');
+                    $(this).val('');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    $('#preview_img').attr('src', event.target.result);
+                    $('#image_preview').show();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#image_preview').hide();
+            }
         });
     });
 </script>
