@@ -375,6 +375,117 @@
         font-size: 0.75rem;
         font-weight: 500;
     }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        /* Hero Section */
+        .hero-slide {
+            min-height: 500px !important;
+        }
+        
+        .hero-slide h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-slide p {
+            font-size: 1rem !important;
+        }
+        
+        .hero-slide .btn {
+            padding: 10px 24px !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-size: 1.75rem !important;
+        }
+        
+        .section-subtitle {
+            font-size: 1rem !important;
+        }
+        
+        /* Stats Section */
+        .stat-number {
+            font-size: 2rem !important;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem !important;
+        }
+        
+        /* Package Grid */
+        .package-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+        }
+        
+        .package-name {
+            font-size: 1.5rem !important;
+        }
+        
+        .package-price {
+            font-size: 2rem !important;
+        }
+        
+        /* Category Tabs */
+        #categoryTabs {
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+        
+        #categoryTabs .nav-link {
+            white-space: nowrap !important;
+            padding: 0.5rem 1.5rem !important;
+            font-size: 0.875rem !important;
+        }
+        
+        /* Product Cards */
+        .product-name {
+            font-size: 1rem !important;
+        }
+        
+        .product-price {
+            font-size: 1.25rem !important;
+        }
+        
+        /* Why Choose Grid */
+        .why-choose-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+        }
+        
+        .feature-icon {
+            width: 60px !important;
+            height: 60px !important;
+            font-size: 1.5rem !important;
+        }
+        
+        /* Navbar */
+        .navbar-brand {
+            font-size: 1.25rem !important;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        /* Extra Small Devices */
+        .hero-slide h1 {
+            font-size: 1.5rem !important;
+        }
+        
+        .section-title {
+            font-size: 1.5rem !important;
+        }
+        
+        .package-price {
+            font-size: 1.75rem !important;
+        }
+        
+        .stat-item {
+            padding: 1rem !important;
+        }
+    }
 </style>
 @endsection
 
@@ -509,7 +620,7 @@
                     @endif
                     
                     <div class="package-image-wrapper">
-                        <img src="{{ $package->image ? asset('storage/' . $package->image) : 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80' }}" alt="{{ $package->name }}">
+                        <img src="{{ $package->image ? (Str::startsWith($package->image, ['http://', 'https://']) ? $package->image : asset('storage/' . $package->image)) : 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80' }}" alt="{{ $package->name }}">
                     </div>
                     
                     <div class="package-content">
