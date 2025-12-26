@@ -21,21 +21,29 @@ class BookingSeeder extends Seeder
             return;
         }
 
-        // Use safe default values to avoid constraint violations
-        $statuses = ['pending', 'confirmed'];
-        $paymentStatuses = ['pending', 'paid'];
+        // EXACT values from migration file
+        $statuses = ['pending', 'confirmed', 'processing', 'delivered', 'cancelled'];
+        $paymentStatuses = ['unpaid', 'partially_paid', 'paid'];
 
         foreach ($users->take(10) as $index => $user) {
             $package = $packages->random();
             $status = $statuses[array_rand($statuses)];
             $paymentStatus = $paymentStatuses[array_rand($paymentStatuses)];
             
-            // Calculate amounts
+            // Calculate amounts based on payment status
             $totalAmount = $package->base_price;
-            $advanceAmount = $paymentStatus === 'paid' ? $totalAmount : 0;
-            $pendingAmount = $totalAmount - $advanceAmount;
+            if ($paymentStatus === 'paid') {
+                $advanceAmount = $totalAmount;
+                $pendingAmount = 0;
+            } elseif ($paymentStatus === 'partially_paid') {
+                $advanceAmount = $totalAmount * 0.5;
+                $pendingAmount = $totalAmount * 0.5;
+            } else {
+                $advanceAmount = 0;
+                $pendingAmount = $totalAmount;
+            }
             
-            // Create booking with correct schema and safe values
+            // Create booking
             $booking = Booking::create([
                 'user_id' => $user->id,
                 'package_id' => $package->id,
