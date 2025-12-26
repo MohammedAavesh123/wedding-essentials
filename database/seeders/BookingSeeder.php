@@ -21,7 +21,8 @@ class BookingSeeder extends Seeder
             return;
         }
 
-        $statuses = ['pending', 'confirmed', 'processing', 'completed', 'cancelled'];
+        // Use exact status values from database constraint
+        $statuses = ['pending', 'confirmed', 'delivered', 'cancelled'];
         $paymentStatuses = ['pending', 'partial', 'paid'];
 
         foreach ($users->take(10) as $index => $user) {
