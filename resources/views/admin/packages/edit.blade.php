@@ -42,9 +42,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Package Image</label>
-                    <input type="file" name="image" class="form-control" accept="image/*">
-                    <small class="text-muted">Upload new package image (JPG, PNG, WEBP) - Leave empty to keep current image</small>
+                    <label>Package Image URL</label>
+                    <input type="url" name="image_url" class="form-control" value="{{ $package->image }}" placeholder="https://example.com/image.jpg">
+                    <small class="text-muted">Enter image URL (e.g., from Unsplash, Imgur, etc.) - Vercel doesn't support file uploads</small>
                     @if($package->image)
                         <div class="mt-2">
                             <img src="{{ $package->image }}" alt="Package Image" style="max-width: 300px; height: auto;">

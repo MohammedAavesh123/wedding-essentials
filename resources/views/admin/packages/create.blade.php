@@ -41,9 +41,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Package Image</label>
-                    <input type="file" name="image" class="form-control" accept="image/*">
-                    <small class="text-muted">Upload package image (JPG, PNG, WEBP)</small>
+                    <label>Package Image URL</label>
+                    <input type="url" name="image_url" class="form-control" placeholder="https://example.com/image.jpg">
+                    <small class="text-muted">Enter image URL (e.g., from Unsplash, Imgur, etc.) - Vercel doesn't support file uploads</small>
                 </div>
 
                 <hr>
