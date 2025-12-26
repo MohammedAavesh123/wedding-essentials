@@ -138,6 +138,28 @@
         $(document).on('click', '.remove-row', function() {
             $(this).closest('tr').remove();
         });
+
+        // Image preview and base64 conversion
+        $('#package_image').on('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Image size should be less than 2MB');
+                    $(this).val('');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    $('#preview_img').attr('src', event.target.result);
+                    $('#image_preview').show();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#image_preview').hide();
+            }
+        });
     });
 </script>
 @stop
