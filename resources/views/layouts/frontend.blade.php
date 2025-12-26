@@ -347,27 +347,52 @@
     <footer class="footer mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-lg-4 col-md-6 mb-4">
                     <h5>{{ \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') }}</h5>
-                    <p>Complete marriage furniture packages at best prices.</p>
+                    <p class="mb-3">Complete marriage furniture packages at best prices. Quality assured with warranty and free delivery.</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-2 col-md-6 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">About Us</a></li>
-                        <li><a href="#" class="text-white">Contact Us</a></li>
-                        <li><a href="#" class="text-white">Terms & Conditions</a></li>
+                        <li class="mb-2"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="mb-2"><a href="{{ route('frontend.packages.index') }}">Packages</a></li>
+                        <li class="mb-2"><a href="{{ route('frontend.products.index') }}">Products</a></li>
+                        <li class="mb-2"><a href="{{ route('register') }}">Register</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <h5>Contact</h5>
-                    <p><i class="fas fa-phone me-2"></i> +91 98765 43210</p>
-                    <p><i class="fas fa-envelope me-2"></i> info@dahejsaman.com</p>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Customer Service</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">About Us</a></li>
+                        <li class="mb-2"><a href="#">Contact Us</a></li>
+                        <li class="mb-2"><a href="#">Terms & Conditions</a></li>
+                        <li class="mb-2"><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Info</h5>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Mumbai, Maharashtra</p>
+                    <p class="mb-2"><i class="fas fa-phone me-2"></i>+91 98765 43210</p>
+                    <p class="mb-2"><i class="fas fa-envelope me-2"></i>info@weddingessentials.com</p>
                 </div>
             </div>
-            <hr>
-            <div class="text-center">
-                <p>&copy; {{ date('Y') }} {{ \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') }}. All rights reserved.</p>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0">&copy; {{ date('Y') }} {{ \App\Models\SiteSetting::get('site_name', 'Wedding Essentials') }}. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        Developed by <a href="https://www.linkedin.com/in/aavesh-khan" target="_blank" class="text-warning fw-bold">Aavesh Khan</a>
+                        <i class="fas fa-code ms-1"></i>
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
