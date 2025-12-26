@@ -19,31 +19,31 @@ class PaymentSeeder extends Seeder
         }
 
         $paymentMethods = ['cash', 'card', 'upi', 'netbanking'];
-        $paymentStatuses = ['pending', 'completed', 'failed', 'refunded'];
+        $statuses = ['pending', 'completed', 'failed'];
 
         foreach ($bookings as $booking) {
-            // Create initial payment based on booking payment status
+            // Create payment based on booking payment status
             if ($booking->payment_status === 'paid') {
                 // Full payment
                 Payment::create([
                     'booking_id' => $booking->id,
                     'amount' => $booking->total_amount,
                     'payment_method' => $paymentMethods[array_rand($paymentMethods)],
-                    'payment_status' => 'completed',
+                    'status' => 'completed',
                     'transaction_id' => 'TXN' . strtoupper(uniqid()),
-                    'payment_date' => $booking->created_at->addHours(2),
+                    'paid_at' => $booking->created_at->addHours(2),
                     'notes' => 'Full payment received',
                 ]);
-            } elseif ($booking->payment_status === 'partial') {
-                // Advance payment (50%)
+            } elseif ($booking->payment_status === 'partially_paid') {
+                // Advance payment
                 Payment::create([
                     'booking_id' => $booking->id,
-                    'amount' => $booking->total_amount * 0.5,
+                    'amount' => $booking->advance_amount,
                     'payment_method' => $paymentMethods[array_rand($paymentMethods)],
-                    'payment_status' => 'completed',
+                    'status' => 'completed',
                     'transaction_id' => 'TXN' . strtoupper(uniqid()),
-                    'payment_date' => $booking->created_at->addHours(1),
-                    'notes' => 'Advance payment (50%)',
+                    'paid_at' => $booking->created_at->addHours(1),
+                    'notes' => 'Advance payment received',
                 ]);
             } else {
                 // Pending payment
@@ -51,9 +51,9 @@ class PaymentSeeder extends Seeder
                     'booking_id' => $booking->id,
                     'amount' => $booking->total_amount,
                     'payment_method' => $paymentMethods[array_rand($paymentMethods)],
-                    'payment_status' => 'pending',
+                    'status' => 'pending',
                     'transaction_id' => null,
-                    'payment_date' => null,
+                    'paid_at' => null,
                     'notes' => 'Payment pending',
                 ]);
             }
