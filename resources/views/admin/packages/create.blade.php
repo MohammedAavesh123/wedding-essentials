@@ -41,9 +41,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Package Image URL</label>
-                    <input type="url" name="image_url" class="form-control" placeholder="https://example.com/image.jpg">
-                    <small class="text-muted">Enter image URL (e.g., from Unsplash, Imgur, etc.) - Vercel doesn't support file uploads</small>
+                    <label>Package Image <span class="text-danger">(Image URL Only - No File Upload)</span></label>
+                    <input type="url" name="image_url" class="form-control" placeholder="https://images.unsplash.com/photo-xyz...">
+                    <small class="text-muted">Paste image URL from Unsplash, Imgur, or any direct image link. Vercel doesn't support file uploads.</small>
                 </div>
 
                 <hr>

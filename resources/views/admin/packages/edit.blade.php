@@ -42,9 +42,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Package Image URL</label>
-                    <input type="url" name="image_url" class="form-control" value="{{ $package->image }}" placeholder="https://example.com/image.jpg">
-                    <small class="text-muted">Enter image URL (e.g., from Unsplash, Imgur, etc.) - Vercel doesn't support file uploads</small>
+                    <label>Package Image <span class="text-danger">(Image URL Only - No File Upload)</span></label>
+                    <input type="url" name="image_url" class="form-control" value="{{ $package->image }}" placeholder="https://images.unsplash.com/photo-xyz...">
+                    <small class="text-muted">Paste image URL from Unsplash, Imgur, or any direct image link. Vercel doesn't support file uploads.</small>
                     @if($package->image)
                         <div class="mt-2">
                             <img src="{{ $package->image }}" alt="Package Image" style="max-width: 300px; height: auto;">
