@@ -219,14 +219,14 @@
                     <p class="package-desc">{{ Str::limit($package->description, 120) }}</p>
                     
                     <div class="package-price-box">
-                        <span class="package-price">₹{{ number_format($package->price ?? $package->base_price ?? 0) }}</span>
+                        <span class="package-price">₹{{ number_format($package->base_price) }}</span>
                         <span class="package-price-label">Starting Price</span>
                     </div>
                     
                     <div class="package-features">
                         <span class="feature-badge">
                             <i class="fas fa-box"></i>
-                            {{ $package->items()->count() ?? $package->items_count ?? 0 }} Items
+                            {{ $package->items_count }} Items
                         </span>
                         <span class="feature-badge">
                             <i class="fas fa-truck"></i>

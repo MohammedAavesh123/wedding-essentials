@@ -628,7 +628,7 @@
                         <p class="package-description">{{ Str::limit($package->description, 100) }}</p>
                         
                         <div class="package-price-section">
-                            <span class="package-price">₹{{ number_format($package->price) }}</span>
+                            <span class="package-price">₹{{ number_format($package->base_price) }}</span>
                             <span class="package-price-label">Starting Price</span>
                         </div>
                         
