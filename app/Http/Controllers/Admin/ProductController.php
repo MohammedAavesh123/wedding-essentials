@@ -46,12 +46,9 @@ class ProductController extends Controller
         $product->in_stock = $request->has('in_stock');
         $product->is_featured = $request->has('is_featured');
         
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/products'), $filename);
-            $product->image = asset('storage/products/' . $filename);
+        // Handle image URL (Vercel doesn't support file uploads)
+        if ($request->filled('image_url')) {
+            $product->image = $request->image_url;
         }
         
         $product->save();
@@ -88,17 +85,9 @@ class ProductController extends Controller
         $product->in_stock = $request->has('in_stock');
         $product->is_featured = $request->has('is_featured');
         
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image && file_exists(public_path(str_replace(asset(''), '', $product->image)))) {
-                @unlink(public_path(str_replace(asset(''), '', $product->image)));
-            }
-            
-            $image = $request->file('image');
-            $filename = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/products'), $filename);
-            $product->image = asset('storage/products/' . $filename);
+        // Handle image URL (Vercel doesn't support file uploads)
+        if ($request->filled('image_url')) {
+            $product->image = $request->image_url;
         }
         
         $product->save();

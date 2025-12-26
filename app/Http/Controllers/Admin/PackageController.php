@@ -46,12 +46,9 @@ class PackageController extends Controller
             $package->auto_calculate_price = $request->has('auto_calculate_price');
             $package->is_featured = $request->has('is_featured');
             
-            // Handle image upload
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $filename = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/packages'), $filename);
-                $package->image = asset('storage/packages/' . $filename);
+            // Handle image URL (Vercel doesn't support file uploads)
+            if ($request->filled('image_url')) {
+                $package->image = $request->image_url;
             }
             
             $package->save();
@@ -94,21 +91,8 @@ class PackageController extends Controller
             $package->auto_calculate_price = $request->has('auto_calculate_price');
             $package->is_featured = $request->has('is_featured');
             
-            // Handle image upload
-            if ($request->hasFile('image')) {
-                // Delete old image if exists
-                if ($package->image && file_exists(public_path(str_replace(asset(''), '', $package->image)))) {
-                    @unlink(public_path(str_replace(asset(''), '', $package->image)));
-                }
-                
-                $image = $request->file('image');
-                $filename = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/packages'), $filename);
-                $package->image = asset('storage/packages/' . $filename);
-            }
-        
             // Handle image URL (Vercel doesn't support file uploads)
-            if ($request->filled('image_url')) { // Changed 'image' to 'image_url' to avoid conflict with file upload validation
+            if ($request->filled('image_url')) {
                 $package->image = $request->image_url;
             }
             
