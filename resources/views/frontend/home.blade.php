@@ -412,6 +412,84 @@
         </div>
     </section>
 
+    {{-- Featured Products by Category --}}
+    <section class="py-5" style="background: #F9FAFB;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Browse by Category</h2>
+                <p class="section-subtitle">Explore our wide range of premium furniture</p>
+            </div>
+            
+            {{-- Category Tabs --}}
+            <ul class="nav nav-pills justify-content-center mb-4" id="categoryTabs" role="tablist">
+                @foreach(\App\Models\Category::all() as $category)
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {{ $loop->first ? 'active' : '' }}" 
+                            id="cat-{{ $category->id }}-tab" 
+                            data-bs-toggle="pill" 
+                            data-bs-target="#cat-{{ $category->id }}" 
+                            type="button" 
+                            role="tab"
+                            style="margin: 0 0.5rem; border-radius: 25px; padding: 0.75rem 2rem; font-weight: 600;">
+                        {{ $category->name }}
+                    </button>
+                </li>
+                @endforeach
+            </ul>
+            
+            {{-- Tab Content --}}
+            <div class="tab-content" id="categoryTabContent">
+                @foreach(\App\Models\Category::all() as $category)
+                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" 
+                     id="cat-{{ $category->id }}" 
+                     role="tabpanel">
+                    <div class="row g-4">
+                        @foreach($category->products()->take(4)->get() as $product)
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="modern-package-card">
+                                <div class="package-image-wrapper" style="height: 200px;">
+                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80' }}" 
+                                         alt="{{ $product->name }}">
+                                </div>
+                                <div class="package-content">
+                                    <h5 class="package-name" style="font-size: 1.125rem;">{{ $product->name }}</h5>
+                                    <p class="package-description" style="font-size: 0.8125rem;">{{ Str::limit($product->description, 60) }}</p>
+                                    <div class="package-price-section">
+                                        <span class="package-price" style="font-size: 1.5rem;">₹{{ number_format($product->price) }}</span>
+                                    </div>
+                                    <div class="package-features mb-3">
+                                        <span class="feature-tag"><i class="fas fa-box me-1"></i>In Stock</span>
+                                        @if($product->package_price)
+                                        <span class="feature-tag"><i class="fas fa-tag me-1"></i>Package Deal</span>
+                                        @endif
+                                    </div>
+                                    <button class="package-cta add-to-combo" 
+                                            data-product-id="{{ $product->id }}"
+                                            data-product-name="{{ $product->name }}"
+                                            data-price="{{ $product->price }}"
+                                            data-package-price="{{ $product->package_price ?? $product->price }}">
+                                        <i class="fas fa-plus me-2"></i>Add to Combo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    
+                    @if($category->products()->count() > 4)
+                    <div class="text-center mt-4">
+                        <a href="{{ route('frontend.products.index', ['category' => $category->slug]) }}" 
+                           class="btn btn-outline-primary px-4 py-2 rounded-pill">
+                            View All {{ $category->name }} <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                    @endif
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     {{-- Why Choose Us Section --}}
     <section class="py-5" style="background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 100%);">
         <div class="container">
