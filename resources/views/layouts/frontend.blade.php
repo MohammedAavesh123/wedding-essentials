@@ -392,6 +392,12 @@
                         Developed by <a href="https://www.linkedin.com/in/aavesh-khan" target="_blank" class="text-warning fw-bold">Aavesh Khan</a>
                         <i class="fas fa-code ms-1"></i>
                     </p>
+                    <p class="mb-0 mt-1">
+                        <small>
+                            <i class="fas fa-phone me-1"></i>+91 8432420648 | 
+                            <i class="fas fa-envelope ms-2 me-1"></i>aaveshofficial@gmail.com
+                        </small>
+                    </p>
                 </div>
             </div>
         </div>
